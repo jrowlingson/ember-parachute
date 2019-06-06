@@ -8,8 +8,8 @@ import {
 function createDescriptor(desc, qpDefinition) {
   qpDefinition = qpDefinition || {};
 
-  const descriptor = {
-    ...desc,
+  const descriptor = Object.assign({
+
     finisher(klass) {
       addQueryParamFor(klass, desc.key, qpDefinition);
       klass.reopen(getQueryParamsFor(klass).Mixin);
@@ -31,7 +31,8 @@ function createDescriptor(desc, qpDefinition) {
 
       return klass;
     }
-  };
+
+  }, desc);
 
   if (desc.kind === 'field') {
     if (typeof desc.initializer === 'function') {
